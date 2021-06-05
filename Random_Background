@@ -1,0 +1,25 @@
+# This script works specifically for xfce desktop manager 
+# to make this work on any other Desktop manager modify line 18
+# with respective command.
+
+directory="/home/malcroft/Pictures/Wallpapers"
+# Change the directory path according to your needs
+
+
+function next_photo() {
+    files=( "$directory"/* )
+    echo "${files[RANDOM % ${#files[@]}]}"
+    # Returns a random image path from directory
+}
+
+function set_background() {
+    # executes command to set next background
+    bg="$*"
+    echo "Changing background to $bg"
+    xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitoreDP-1/workspace0/last-image -s $bg
+}
+
+
+background=$(next_photo)
+echo "Next background is $background"
+set_background $background
